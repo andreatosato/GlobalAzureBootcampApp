@@ -19,7 +19,7 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
             [OrchestrationTrigger] DurableOrchestrationContext context)
         {
             OrdiniAcquisto ordineAcquisto = context.GetInput<OrdiniAcquisto>();
-            ordineAcquisto.IdOrdine = Guid.NewGuid().ToString("N");
+            ordineAcquisto.IdOrdine = context.InstanceId;
 
             // TODO: Salva l'ordine in un DB.
             string mailInstance;
@@ -43,7 +43,8 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
                 RowKey = $"{smsInstance}-{mailInstance}",
                 Ordine = ordineAcquisto,
                 NotificaSmsOrdineCliente = smsInstance,
-                InviaMailOrdineCliente = mailInstance
+                InviaMailOrdineCliente = mailInstance,
+                Elaborazione = DateTimeOffset.UtcNow
             };
         }
     }

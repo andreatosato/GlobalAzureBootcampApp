@@ -30,7 +30,7 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
             // Verifica completamento lavoro...
             Log.Information($"Inizio Orchestratore con ID = '{instanceId}'.");
             var res = starter.CreateCheckStatusResponse(req, instanceId);
-            res.Headers.RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromSeconds(10));
+            res.Headers.RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromMinutes(10));
             return res;
         }
     }

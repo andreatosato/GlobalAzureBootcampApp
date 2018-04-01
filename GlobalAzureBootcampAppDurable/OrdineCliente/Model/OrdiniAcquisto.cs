@@ -33,5 +33,6 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente.Model
         public OrdiniAcquisto Ordine { get; set; }
         public string InviaMailOrdineCliente { get; set; }
         public string NotificaSmsOrdineCliente { get; set; }
+        public DateTimeOffset Elaborazione { get; set; }
     }
 }
