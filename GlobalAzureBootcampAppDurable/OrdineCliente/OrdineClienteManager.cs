@@ -19,27 +19,25 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
             [OrchestrationTrigger] DurableOrchestrationContext context)
         {
             OrdiniAcquistoModel ordineAcquisto = context.GetInput<OrdiniAcquistoModel>();
-            ordineAcquisto.IdOrdine = context.InstanceId;
+            // Se è un nuovo tentativo, imposto l'IdOrdine
+            if (!context.IsReplaying)
+                ordineAcquisto.IdOrdine = context.InstanceId;
 
             // TODO: Salva l'ordine in un DB.
             string mailInstance;
             string smsInstance = "";
-            try
-            {
+            
                
-                //smsInstance = await context.CallActivityAsync<string>(Workflow.NotificaSmsOrdineCliente, ordineAcquisto);
-                //Log.Information($"OrdineClienteManager: SmsInstance {smsInstance}");
-                mailInstance = await context.CallActivityAsync<string>(Workflow.InviaMailOrdineCliente, ordineAcquisto);
-                Log.Information($"OrdineClienteManager: MailInstance {mailInstance}");
-                if (!string.IsNullOrEmpty(mailInstance))
-                {
-                    await context.CallSubOrchestratorAsync(Workflow.AttendiOrdineCliente, ordineAcquisto.IdOrdine);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            //smsInstance = await context.CallActivityAsync<string>(Workflow.NotificaSmsOrdineCliente, ordineAcquisto);
+            //Log.Information($"OrdineClienteManager: SmsInstance {smsInstance}");
+            mailInstance = await context.CallActivityAsync<string>(Workflow.InviaMailOrdineCliente, ordineAcquisto);
+            Log.Information($"OrdineClienteManager: MailInstance {mailInstance}");
+                
+            //TODO: abilitare Human Interaction
+            //if (!string.IsNullOrEmpty(mailInstance))
+            //{
+            //    await context.CallSubOrchestratorAsync(Workflow.AttendiOrdineCliente, ordineAcquisto.IdOrdine);
+            //}
 
             return new OrdiniAcquistoTable
             {

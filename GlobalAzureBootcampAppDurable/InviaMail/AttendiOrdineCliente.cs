@@ -19,13 +19,14 @@ namespace GlobalAzureBootcampAppDurable.InviaMail
         public static async Task<ApprovaOrdineTable> Run(
             [OrchestrationTrigger] DurableOrchestrationContext context)
         {
+            if (!context.IsReplaying) Log.Verbose("Starting up!");
             Log.Information($"Instance: {context.InstanceId}");
             string ordinePendingId = context.GetInput<string>();
             Log.Information($"Pending Order {ordinePendingId}");
             string status = "";
             using (var timeoutCts = new CancellationTokenSource())
             {
-                DateTime dueTime = context.CurrentUtcDateTime.AddMinutes(5);
+                DateTime dueTime = context.CurrentUtcDateTime.AddMinutes(15);
                 Task durableTimeout = context.CreateTimer(dueTime, timeoutCts.Token);
 
                 Task<bool> approvalTask = context.WaitForExternalEvent<bool>(Workflow.EventoApprova);
@@ -44,6 +45,7 @@ namespace GlobalAzureBootcampAppDurable.InviaMail
                 }
                 Log.Information(status);
             }
+            if (!context.IsReplaying) Log.Verbose("Done!");
             return new ApprovaOrdineTable
             {
                 PartitionKey = "PendingApproval",
