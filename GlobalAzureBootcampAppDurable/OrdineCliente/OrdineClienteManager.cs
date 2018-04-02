@@ -18,7 +18,7 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
         public static async Task<OrdiniAcquistoTable> Run(
             [OrchestrationTrigger] DurableOrchestrationContext context)
         {
-            OrdiniAcquisto ordineAcquisto = context.GetInput<OrdiniAcquisto>();
+            OrdiniAcquistoModel ordineAcquisto = context.GetInput<OrdiniAcquistoModel>();
             ordineAcquisto.IdOrdine = context.InstanceId;
 
             // TODO: Salva l'ordine in un DB.
@@ -31,6 +31,10 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
                 //Log.Information($"OrdineClienteManager: SmsInstance {smsInstance}");
                 mailInstance = await context.CallActivityAsync<string>(Workflow.InviaMailOrdineCliente, ordineAcquisto);
                 Log.Information($"OrdineClienteManager: MailInstance {mailInstance}");
+                if (!string.IsNullOrEmpty(mailInstance))
+                {
+                    await context.CallSubOrchestratorAsync(Workflow.AttendiOrdineCliente, ordineAcquisto.IdOrdine);
+                }
             }
             catch (Exception ex)
             {

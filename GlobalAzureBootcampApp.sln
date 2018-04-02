@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Durable", "Durable", "{561A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Approval", "Approval", "{0C7979F1-0C81-44AD-B4E9-70A6E6D293F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAzureBootcampAppApproval", "GlobalAzureBootcampAppApproval\GlobalAzureBootcampAppApproval.csproj", "{969F6728-916F-4D51-AC81-2D894D70B8B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlobalAzureBootcampAppApproval", "GlobalAzureBootcampAppApproval\GlobalAzureBootcampAppApproval.csproj", "{969F6728-916F-4D51-AC81-2D894D70B8B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

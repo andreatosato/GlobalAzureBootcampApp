@@ -24,7 +24,7 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
                 .WriteTo.TraceWriter(traceWriter)
                 .CreateLogger();
 
-            OrdiniAcquisto ordiniAcquisto = await req.Content.ReadAsAsync<OrdiniAcquisto>();
+            OrdiniAcquistoModel ordiniAcquisto = await req.Content.ReadAsAsync<OrdiniAcquistoModel>();
             string instanceId = await starter.StartNewAsync(Workflow.OrdineClienteManager, ordiniAcquisto);
 
             // Verifica completamento lavoro...

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GlobalAzureBootcampAppDurable.OrdineCliente.Model
 {
-    public class OrdiniAcquisto
+    public class OrdiniAcquistoModel
     {
         public string IdOrdine { get; set; }
         public Cliente ClienteCorrente { get; set; }
@@ -30,7 +30,7 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente.Model
     {
         public string PartitionKey { get; set; }
         public string RowKey { get; set; }
-        public OrdiniAcquisto Ordine { get; set; }
+        public OrdiniAcquistoModel Ordine { get; set; }
         public string InviaMailOrdineCliente { get; set; }
         public string NotificaSmsOrdineCliente { get; set; }
         public DateTimeOffset Elaborazione { get; set; }

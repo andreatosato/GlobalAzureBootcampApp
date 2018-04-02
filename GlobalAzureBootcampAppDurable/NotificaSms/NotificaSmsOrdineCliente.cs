@@ -15,7 +15,7 @@ namespace GlobalAzureBootcampAppDurable.NotificaSms
     {
         [FunctionName(Workflow.NotificaSmsOrdineCliente)]
         public static string Run(
-           [ActivityTrigger] OrdiniAcquisto ordiniAcquisto,
+           [ActivityTrigger] OrdiniAcquistoModel ordiniAcquisto,
            [TwilioSms(AccountSidSetting = "TwilioAccountSid",
                       AuthTokenSetting = "TwilioAuthToken",
                       From = "%TwilioPhoneNumber%")]
@@ -29,7 +29,7 @@ namespace GlobalAzureBootcampAppDurable.NotificaSms
             message = new SMSMessage
             {
                 To = ordiniAcquisto.ClienteCorrente.NumeroTelefono,
-                Body = $"L'ordine {ordiniAcquisto.IdOrdine} è stato preso in carico"
+                Body = $"L'ordine {ordiniAcquisto.IdOrdine} è preso in carico. Conferma la mail"
             };
             return currentInstance;
         }

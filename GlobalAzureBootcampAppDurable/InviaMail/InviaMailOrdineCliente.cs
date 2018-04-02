@@ -14,7 +14,8 @@ namespace GlobalAzureBootcampAppDurable.InviaMail
     {
         [FunctionName(Workflow.InviaMailOrdineCliente)]
         public static string Run(
-           [ActivityTrigger] OrdiniAcquisto ordiniAcquisto,
+           [ActivityTrigger] OrdiniAcquistoModel ordiniAcquisto,
+           [OrchestrationClient] DurableOrchestrationClient starter,
            [SendGrid(ApiKey = "SendGridApiKey")]
            out Mail message)
         {
@@ -33,7 +34,8 @@ namespace GlobalAzureBootcampAppDurable.InviaMail
             Content content = new Content
             {
                 Type = "text/html",
-                Value = $"L'ordine {ordiniAcquisto.IdOrdine} è stato preso in carico"
+                Value = $@"L'ordine {ordiniAcquisto.IdOrdine} è stato preso in carico
+                <br><a href='{Utility.GetEnvironmentVariable("PublicUrl")}/ApprovaOrdine?ordineId={ordiniAcquisto.IdOrdine}'>Conferma ordine</a>"
             };
 
             message.From = new Email(fromMail);
