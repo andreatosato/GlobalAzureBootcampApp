@@ -25,11 +25,11 @@ namespace GlobalAzureBootcampAppDurable.OrdineCliente
 
             // TODO: Salva l'ordine in un DB.
             string mailInstance;
-            string smsInstance = "";
-            
-               
-            //smsInstance = await context.CallActivityAsync<string>(Workflow.NotificaSmsOrdineCliente, ordineAcquisto);
-            //Log.Information($"OrdineClienteManager: SmsInstance {smsInstance}");
+            string smsInstance;
+
+
+            smsInstance = await context.CallActivityAsync<string>(Workflow.NotificaSmsOrdineCliente, ordineAcquisto);
+            Log.Information($"OrdineClienteManager: SmsInstance {smsInstance}");
             mailInstance = await context.CallActivityAsync<string>(Workflow.InviaMailOrdineCliente, ordineAcquisto);
             Log.Information($"OrdineClienteManager: MailInstance {mailInstance}");
                 
